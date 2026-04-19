@@ -47,7 +47,14 @@ export default function Dashboard() {
         setLoading(false)
       }
     }
+    
     loadData()
+
+    const intervalId = setInterval(() => {
+      loadData()
+    }, 5000)
+
+    return () => clearInterval(intervalId)
   }, [])
 
   const todayCheckin = events.find(e => {
