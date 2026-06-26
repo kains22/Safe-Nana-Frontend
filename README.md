@@ -1,16 +1,46 @@
-# React + Vite
+# 🛡️ SafeNana
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A two-interface elderly safety platform built after my grandmother nearly lost her savings to a phone scammer.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## 📱 What It Does
 
-## React Compiler
+**Elderly side**
+- Three buttons:  
+  - I'm Okay Today  
+  - I Got a Suspicious Message  
+  - I Need Help  
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+**Family side**
+- Real-time dashboard with daily check-ins  
+- Scam alerts
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 🚀 Live Demo
+
+- 👵 [Elderly Interface](https://safe-nana-frontend.vercel.app/elderly)  
+- 👨‍👩‍👧 [Family Dashboard](https://safe-nana-frontend.vercel.app/dashboard)
+
+---
+
+## 🛠️ Built With
+
+- **Frontend:** React, Vite  
+- **Backend:** Node.js, Express, MongoDB  
+- **Deployment:** Vercel
+
+---
+
+## 👥 User Testing
+
+- Tested with **20+ seniors** in Lahore, Pakistan  
+- Achieved **8/10 user satisfaction scores** across multiple iterations
+
+---
+
+## 📖 The Story
+
+> *"Beta, agar galti ho gayi toh? (Son, what if a mistake happens?)"* — my grandmother’s question became my design brief.  
+> **Dignity is the only metric.**
