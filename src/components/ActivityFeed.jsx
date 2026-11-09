@@ -27,9 +27,24 @@ const EVENT_CONFIG = {
   }
 }
 
+// Used for any event type we don't recognise (never look like a check-in)
+const UNKNOWN_CONFIG = {
+  icon: '❔',
+  label: 'Activity',
+  bgClass: 'event--gray',
+  iconBg: 'icon-bg--gray'
+}
+
+const SENDER_LABELS = {
+  unknown_number: 'Unknown Number 📵',
+  whatsapp_forward: 'WhatsApp Forward 💬',
+  someone_i_know: 'Someone They Know 🧑'
+}
+
+// Uses the viewer's own language/region for date format (UK, US, EU)
 function formatTime(dateStr) {
   const date = new Date(dateStr)
-  return date.toLocaleString('en-GB', {
+  return date.toLocaleString(undefined, {
     day: '2-digit',
     month: 'short',
     hour: '2-digit',
@@ -51,18 +66,12 @@ function formatRelative(dateStr) {
   return `${diffDays}d ago`
 }
 
-const SENDER_LABELS = {
-  unknown_number: 'Unknown Number 📵',
-  whatsapp_forward: 'WhatsApp Forward 💬',
-  someone_i_know: 'Someone They Know 🧑'
-}
-
-export default function ActivityFeed({ events, compact = false }) {
+export default function ActivityFeed({ events }) {
   if (!events || events.length === 0) {
     return (
       <div className="activity-empty">
         <span className="activity-empty-icon">🌿</span>
-        <p>No activity yet. Check-ins will appear here.</p>
+        <p>No activity yet. Check-ins, alerts and help requests will appear here.</p>
       </div>
     )
   }
@@ -70,12 +79,13 @@ export default function ActivityFeed({ events, compact = false }) {
   return (
     <div className="activity-feed">
       {events.map((event, idx) => {
-        const config = EVENT_CONFIG[event.type] || EVENT_CONFIG.checkin
+        const config = EVENT_CONFIG[event.type] || UNKNOWN_CONFIG
+        const senderLabel = SENDER_LABELS[event.senderType]
         return (
           <div
             key={event._id || idx}
             className={`activity-event ${config.bgClass} animate-fade-in`}
-            style={{ animationDelay: `${idx * 0.05}s` }}
+            style={{ animationDelay: `${Math.min(idx, 10) * 0.05}s` }}
           >
             <div className={`activity-icon ${config.iconBg}`}>
               {config.icon}
@@ -83,10 +93,8 @@ export default function ActivityFeed({ events, compact = false }) {
             <div className="activity-body">
               <div className="activity-top">
                 <span className="activity-event-label">{config.label}</span>
-                {event.senderType && (
-                  <span className="activity-badge">
-                    {SENDER_LABELS[event.senderType]}
-                  </span>
+                {senderLabel && (
+                  <span className="activity-badge">{senderLabel}</span>
                 )}
               </div>
               <p className="activity-detail">{event.details}</p>

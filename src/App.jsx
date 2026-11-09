@@ -4,6 +4,7 @@ import Dashboard from './pages/Dashboard'
 import AlertsPage from './pages/AlertsPage'
 import SettingsPage from './pages/SettingsPage'
 import BillingPage from './pages/BillingPage'
+import PrivacyPage from './pages/PrivacyPage'
 import DashboardLayout from './components/DashboardLayout'
 
 function App() {
@@ -28,6 +29,12 @@ function App() {
       <Route path="/billing" element={<DashboardLayout />}>
         <Route index element={<BillingPage />} />
       </Route>
+      <Route path="/privacy" element={<DashboardLayout />}>
+        <Route index element={<PrivacyPage />} />
+      </Route>
+
+      {/* Unknown address: go to the start */}
+      <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   )
 }

@@ -1,4 +1,4 @@
-import { NavLink, Outlet, useLocation } from 'react-router-dom'
+import { NavLink, Link, Outlet } from 'react-router-dom'
 import './DashboardLayout.css'
 
 const navItems = [
@@ -11,12 +11,25 @@ const navItems = [
 export default function DashboardLayout() {
   return (
     <div className="layout">
+      <div
+        role="note"
+        style={{
+          background: '#fff4d6',
+          color: '#5c4400',
+          textAlign: 'center',
+          padding: '8px 12px',
+          fontSize: '0.9rem',
+          borderBottom: '1px solid #e6c875'
+        }}
+      >
+        <strong>Prototype / pilot version.</strong> Not for emergency use. Do not enter real personal data.
+      </div>
       <header className="layout-header">
         <div className="layout-header-inner">
-          <a href="/dashboard" className="logo">
+          <Link to="/dashboard" className="logo">
             <span className="logo-leaf">🌿</span>
             <span className="logo-text">SafeNana</span>
-          </a>
+          </Link>
           <nav className="layout-nav" aria-label="Main navigation">
             {navItems.map(({ to, label, icon }) => (
               <NavLink
@@ -39,7 +52,10 @@ export default function DashboardLayout() {
         <Outlet />
       </main>
       <footer className="layout-footer">
-        <p>SafeNana © 2026 — Keeping families connected with care 💚</p>
+        <p>
+          SafeNana © 2026 — Prototype version ·{' '}
+          <Link to="/privacy">Privacy</Link>
+        </p>
       </footer>
     </div>
   )

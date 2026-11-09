@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
 import { getAlerts } from '../services/api'
-import { mockEvents } from '../services/mockData'
 import './AlertsPage.css'
 
 const SENDER_LABELS = {
@@ -10,7 +9,7 @@ const SENDER_LABELS = {
 }
 
 function formatDateTime(dateStr) {
-  return new Date(dateStr).toLocaleString('en-GB', {
+  return new Date(dateStr).toLocaleString(undefined, {
     weekday: 'short',
     day: '2-digit',
     month: 'short',
@@ -23,34 +22,44 @@ function formatDateTime(dateStr) {
 export default function AlertsPage() {
   const [alerts, setAlerts] = useState([])
   const [loading, setLoading] = useState(true)
+  const [loadError, setLoadError] = useState(false)
   const [filter, setFilter] = useState('all')
 
   useEffect(() => {
     getAlerts()
       .then(res => setAlerts(res.data))
-      .catch(() => setAlerts(mockEvents.filter(e => e.type === 'suspicious_message')))
+      .catch(() => setLoadError(true))
       .finally(() => setLoading(false))
   }, [])
 
   const filtered = filter === 'all' ? alerts : alerts.filter(a => a.senderType === filter)
+  const who = alerts[0]?.elderlyName && alerts[0].elderlyName !== 'Your loved one'
+    ? alerts[0].elderlyName
+    : 'the person you support'
 
   return (
     <div className="alerts-page animate-fade-in">
       <div className="page-header">
         <div>
-          <h1 className="page-title">🔔 Suspicious Message Alerts</h1>
-          <p className="page-subtitle">All scam and fraud attempts flagged by {alerts[0]?.elderlyName || 'Nana'}</p>
+          <h1 className="page-title">🔔 Suspicious Message Reports</h1>
+          <p className="page-subtitle">Messages reported by {who}</p>
         </div>
         <div className="alerts-count-badge">
-          {alerts.length} total alerts
+          {alerts.length} total reports
         </div>
       </div>
+
+      {loadError && (
+        <div className="card" role="alert" style={{ borderLeft: '6px solid #c0392b', marginBottom: '1rem' }}>
+          <strong>⚠️ Cannot reach the server.</strong> Reports could not be loaded. Please refresh and try again.
+        </div>
+      )}
 
       {/* Summary banner */}
       <div className="alerts-summary-banner">
         <div className="alert-summary-stat">
           <span className="alert-summary-num">{alerts.length}</span>
-          <span className="alert-summary-label">Total Alerts</span>
+          <span className="alert-summary-label">Total Reports</span>
         </div>
         <div className="alert-summary-divider" />
         <div className="alert-summary-stat">
@@ -72,7 +81,7 @@ export default function AlertsPage() {
       {/* Filter pills */}
       <div className="filter-pills">
         {[
-          { key: 'all', label: 'All Alerts', icon: '🔔' },
+          { key: 'all', label: 'All Reports', icon: '🔔' },
           { key: 'unknown_number', label: 'Unknown Number', icon: '📵' },
           { key: 'whatsapp_forward', label: 'WhatsApp Forward', icon: '💬' },
           { key: 'someone_i_know', label: 'Known Contact', icon: '🧑' },
@@ -88,16 +97,19 @@ export default function AlertsPage() {
         ))}
       </div>
 
-      {/* Alerts list */}
+      {/* Reports list */}
       {loading ? (
         <div className="loading-skeleton">
-          {[1,2,3].map(i => <div key={i} className="skeleton-item" style={{ height: 100 }} />)}
+          {[1, 2, 3].map(i => <div key={i} className="skeleton-item" style={{ height: 100 }} />)}
         </div>
-      ) : filtered.length === 0 ? (
+      ) : loadError ? null : filtered.length === 0 ? (
         <div className="alerts-empty">
           <span className="alerts-empty-icon">🛡️</span>
-          <h3>No alerts in this category</h3>
-          <p>All clear! No suspicious messages of this type have been reported.</p>
+          <h3>No reports in this category</h3>
+          <p>
+            Nothing has been reported here. This only shows what was reported in the app,
+            so keep talking with your loved one about scams.
+          </p>
         </div>
       ) : (
         <div className="alerts-list">
@@ -107,7 +119,7 @@ export default function AlertsPage() {
               <div
                 key={alert._id || idx}
                 className={`alert-card alert-card--${senderInfo.color} animate-fade-in`}
-                style={{ animationDelay: `${idx * 0.08}s` }}
+                style={{ animationDelay: `${Math.min(idx, 10) * 0.08}s` }}
               >
                 <div className="alert-card-header">
                   <div className="alert-type-badge">
