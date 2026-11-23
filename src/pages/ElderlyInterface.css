@@ -118,37 +118,32 @@
 }
 
 .elderly-btn--green {
-  background: linear-gradient(135deg, #4CAF50, #388E3C);
-  box-shadow: 0 8px 24px rgba(76, 175, 80, 0.35);
+  background: #166534;
+  box-shadow: 0 8px 24px rgba(22, 101, 52, 0.35);
 }
+.elderly-btn--green:hover { background: #14532d; transform: translateY(-2px); }
 
-.elderly-btn--green:hover {
-  background: linear-gradient(135deg, #56bc5a, #43a047);
-  box-shadow: 0 12px 32px rgba(76, 175, 80, 0.45);
-  transform: translateY(-2px);
-}
-
+/* "I Need Help" is now RED (urgent) */
 .elderly-btn--red {
-  background: linear-gradient(135deg, #FF5252, #D32F2F);
-  box-shadow: 0 8px 24px rgba(255, 82, 82, 0.35);
+  background: #991B1B;
+  box-shadow: 0 8px 24px rgba(153, 27, 27, 0.35);
 }
+.elderly-btn--red:hover { background: #7f1d1d; transform: translateY(-2px); }
 
-.elderly-btn--red:hover {
-  background: linear-gradient(135deg, #ff6b6b, #e53935);
-  box-shadow: 0 12px 32px rgba(255, 82, 82, 0.45);
-  transform: translateY(-2px);
+/* "Suspicious message" is now AMBER, with dark text */
+.elderly-btn--amber {
+  background: #F59E0B;
+  color: #111827;
+  box-shadow: 0 8px 24px rgba(245, 158, 11, 0.4);
 }
+.elderly-btn--amber:hover { background: #D97706; transform: translateY(-2px); }
 
+/* Kept for the Call button on the Help screen (changes in Step 2) */
 .elderly-btn--blue {
-  background: linear-gradient(135deg, #2196F3, #1565C0);
-  box-shadow: 0 8px 24px rgba(33, 150, 243, 0.35);
+  background: #1565C0;
+  box-shadow: 0 8px 24px rgba(21, 101, 192, 0.35);
 }
-
-.elderly-btn--blue:hover {
-  background: linear-gradient(135deg, #42a5f5, #1976d2);
-  box-shadow: 0 12px 32px rgba(33, 150, 243, 0.45);
-  transform: translateY(-2px);
-}
+.elderly-btn--blue:hover { background: #0d47a1; transform: translateY(-2px); }
 
 .elderly-btn-icon {
   font-size: 2rem;
@@ -384,3 +379,69 @@
     min-height: auto;
   }
 }
+
+
+/* Exit cue */
+.elderly-exit-note {
+  background: #f1f5f9;
+  border: 2px solid #94a3b8;
+  border-radius: var(--radius-lg);
+  padding: var(--space-4) var(--space-5);
+  font-size: 1.15rem;
+  line-height: 1.5;
+  color: #111827;
+  max-width: 360px;
+  text-align: center;
+}
+.elderly-btn-exit {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #111827;
+  background: var(--color-white);
+  border: 2.5px solid #111827;
+  border-radius: var(--radius-full);
+  padding: var(--space-3) var(--space-6);
+  min-height: 56px;
+  cursor: pointer;
+}
+
+/* Help screen: one tap target for the family contact */
+.elderly-contact-link {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  background: #111827;
+  color: #ffffff;
+  text-decoration: none;
+  border-radius: var(--radius-xl);
+  padding: var(--space-5) var(--space-6);
+  min-height: 88px;
+  box-shadow: var(--shadow-lg);
+  margin-bottom: var(--space-4);
+}
+.elderly-contact-link:active { transform: scale(0.97); }
+.elderly-contact-link-action { font-size: 1.4rem; font-weight: 700; }
+.elderly-contact-link-phone { font-size: 1.1rem; opacity: 0.9; }
+
+/* One-tap emergency call */
+.elderly-emergency-btn {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-1);
+  background: #991B1B;
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 1.4rem;
+  font-weight: 800;
+  text-align: center;
+  border-radius: var(--radius-xl);
+  padding: var(--space-5) var(--space-6);
+  min-height: 88px;
+  justify-content: center;
+  box-shadow: 0 8px 24px rgba(153, 27, 27, 0.35);
+}
+.elderly-emergency-btn:active { transform: scale(0.97); }
+.elderly-emergency-number { font-size: 1.1rem; font-weight: 600; }

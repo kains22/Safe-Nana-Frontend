@@ -27,6 +27,36 @@ function getGreeting() {
   return 'Good Evening'
 }
 
+
+function ExitCue() {
+  const [msg, setMsg] = useState('')
+  const handleClose = () => {
+    window.close()
+    // Browsers often block this. If the page is still here, explain what to do.
+    setTimeout(() => {
+      setMsg("Your browser won't let SafeNana close itself. Please press your phone's Home button.")
+    }, 400)
+  }
+  return (
+    <>
+      <div className="elderly-exit-note" role="note">
+        <strong>All done!</strong> You can now press your phone's Home button or close this window.
+      </div>
+      <button className="elderly-btn-exit" onClick={handleClose}>
+        Close SafeNana
+      </button>
+      {msg && <p className="elderly-subtext" role="status">{msg}</p>}
+    </>
+  )
+}
+
+// Picks an emergency number from the phone's language/region. Defaults to 112.
+function getEmergencyNumber() {
+  const region = (navigator.language || '').split('-')[1]?.toUpperCase()
+  const numbers = { US: '911', CA: '911', GB: '999', IE: '112', PK: '1122', AU: '000' }
+  return numbers[region] || '112'
+}
+
 export default function ElderlyInterface() {
   const [screen, setScreen] = useState(SCREENS.HOME)
   const [settings, setSettings] = useState(EMPTY_SETTINGS)
@@ -151,7 +181,7 @@ export default function ElderlyInterface() {
 
             <button
               id="btn-suspicious"
-              className={`elderly-btn elderly-btn--red ${ripple === 'suspicious' ? 'ripple' : ''}`}
+              className={`elderly-btn elderly-btn--amber ${ripple === 'suspicious' ? 'ripple' : ''}`}
               onClick={handleSuspicious}
               disabled={loading}
               aria-label="I got a suspicious message"
@@ -162,7 +192,7 @@ export default function ElderlyInterface() {
 
             <button
               id="btn-help"
-              className={`elderly-btn elderly-btn--blue ${ripple === 'help' ? 'ripple' : ''}`}
+              className={`elderly-btn elderly-btn--red ${ripple === 'help' ? 'ripple' : ''}`}
               onClick={handleHelp}
               disabled={loading}
               aria-label="I need help"
@@ -196,8 +226,9 @@ export default function ElderlyInterface() {
             className="elderly-btn-back"
             onClick={goHome}
           >
-            ← Go Back Home
+            ← Back to choices
           </button>
+          <ExitCue />
         </div>
       )}
 
@@ -267,11 +298,13 @@ export default function ElderlyInterface() {
             className="elderly-btn-back"
             onClick={goHome}
           >
-            ← I understand, go home
+            ← I understand, back to choices
           </button>
+          <ExitCue />
         </div>
       )}
 
+      {/* HELP SCREEN */}
       {/* HELP SCREEN */}
       {screen === SCREENS.HELP && (
         <div className="elderly-screen animate-slide-up">
@@ -280,42 +313,38 @@ export default function ElderlyInterface() {
             <h2 className="elderly-question-title">Request Recorded</h2>
             <p className="elderly-question-sub">
               {hasContact
-                ? 'Please call your contact directly now:'
+                ? 'Tap below to call your contact now:'
                 : 'Please call someone you trust now.'}
             </p>
           </div>
 
           {hasContact && (
-            <>
-              <div className="elderly-contact-card">
-                <div className="elderly-contact-avatar">
-                  {contactName.charAt(0).toUpperCase()}
-                </div>
-                <div className="elderly-contact-info">
-                  <span className="elderly-contact-name">{contactName}</span>
-                  <span className="elderly-contact-phone">{contactPhone}</span>
-                </div>
+            <a
+              id="btn-call"
+              href={`tel:${contactPhone.replace(/\s/g, '')}`}
+              className="elderly-contact-link"
+            >
+              <div className="elderly-contact-avatar">
+                {contactName.charAt(0).toUpperCase()}
               </div>
-
-              <a
-                id="btn-call"
-                href={`tel:${contactPhone.replace(/\s/g, '')}`}
-                className="elderly-btn elderly-btn--blue"
-                style={{ textDecoration: 'none', display: 'flex', marginTop: 'var(--space-4)' }}
-              >
-                <span className="elderly-btn-icon">📞</span>
-                <span className="elderly-btn-text">Call {contactName}</span>
-              </a>
-            </>
+              <div className="elderly-contact-info">
+                <span className="elderly-contact-link-action">📞 Call {contactName}</span>
+                <span className="elderly-contact-link-phone">{contactPhone}</span>
+              </div>
+            </a>
           )}
 
-          <div className="elderly-warning-box" style={{ marginTop: 'var(--space-4)' }}>
-            <strong>🚨 In an emergency,</strong><br />
-            call your local emergency number straight away.
-          </div>
+          <a
+            id="btn-emergency"
+            href={`tel:${getEmergencyNumber()}`}
+            className="elderly-emergency-btn"
+          >
+            🚨 Tap to Call Emergency Services
+            <span className="elderly-emergency-number">{getEmergencyNumber()}</span>
+          </a>
 
           <button className="elderly-btn-back" onClick={goHome} style={{ marginTop: 'var(--space-6)' }}>
-            ← Go Back Home
+            ← Back to choices
           </button>
         </div>
       )}
