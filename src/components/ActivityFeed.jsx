@@ -37,8 +37,9 @@ const UNKNOWN_CONFIG = {
 
 const SENDER_LABELS = {
   unknown_number: 'Unknown Number 📵',
-  whatsapp_forward: 'WhatsApp Forward 💬',
-  someone_i_know: 'Someone They Know 🧑'
+  whatsapp_forward: 'WhatsApp Message 💬',
+  someone_i_know: 'Someone They Know 🧑',
+  not_sure: 'Not Sure 🤔'
 }
 
 // Uses the viewer's own language/region for date format (UK, US, EU)

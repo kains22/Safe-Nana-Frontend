@@ -233,12 +233,13 @@ export default function ElderlyInterface() {
       )}
 
       {/* SUSPICIOUS MESSAGE — CHOOSE SENDER */}
+      {/* SUSPICIOUS MESSAGE — CHOOSE SENDER */}
       {screen === SCREENS.SUSPICIOUS_CHOICE && (
-        <div className="elderly-screen animate-slide-up">
+        <div className="elderly-screen elderly-screen--compact animate-slide-up">
           <div className="elderly-question-header">
             <div className="elderly-question-icon">🔍</div>
             <h2 className="elderly-question-title">Who sent it?</h2>
-            <p className="elderly-question-sub">Tap the one that best describes the sender:</p>
+            <p className="elderly-question-sub">Tap the best match:</p>
           </div>
 
           <div className="elderly-choice-buttons">
@@ -258,7 +259,7 @@ export default function ElderlyInterface() {
               disabled={loading}
             >
               <span className="elderly-choice-icon">💬</span>
-              <span>WhatsApp Forward</span>
+              <span>Message from WhatsApp</span>
             </button>
             <button
               id="btn-sender-known"
@@ -268,6 +269,15 @@ export default function ElderlyInterface() {
             >
               <span className="elderly-choice-icon">🧑</span>
               <span>Someone I Know</span>
+            </button>
+            <button
+              id="btn-sender-notsure"
+              className="elderly-choice-btn"
+              onClick={() => handleSuspiciousReport('not_sure')}
+              disabled={loading}
+            >
+              <span className="elderly-choice-icon">🤔</span>
+              <span>I'm Not Sure</span>
             </button>
           </div>
 

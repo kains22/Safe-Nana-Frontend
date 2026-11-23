@@ -5,7 +5,8 @@ import './AlertsPage.css'
 const SENDER_LABELS = {
   unknown_number: { label: 'Unknown Number', icon: '📵', color: 'red' },
   whatsapp_forward: { label: 'WhatsApp Forward', icon: '💬', color: 'amber' },
-  someone_i_know: { label: 'Someone They Know', icon: '🧑', color: 'blue' }
+  someone_i_know: { label: 'Someone They Know', icon: '🧑', color: 'blue' },
+  not_sure: { label: 'Not Sure', icon: '🤔', color: 'gray' }
 }
 
 function formatDateTime(dateStr) {
