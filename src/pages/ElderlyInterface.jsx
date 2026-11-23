@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { postCheckin, postSuspicious, postHelp, getSettings } from '../services/api'
+import { triggerHapticFeedback, PATTERNS, isHapticEnabled, setHapticEnabled } from '../utils/haptics'
 import './ElderlyInterface.css'
 
 const SCREENS = {
@@ -30,6 +31,7 @@ function getGreeting() {
 
 function ExitCue() {
   const [msg, setMsg] = useState('')
+
   const handleClose = () => {
     window.close()
     // Browsers often block this. If the page is still here, explain what to do.
@@ -64,6 +66,7 @@ export default function ElderlyInterface() {
   const [loading, setLoading] = useState(false)
   const [ripple, setRipple] = useState(null)
   const [error, setError] = useState('')
+  const [vibration, setVibration] = useState(isHapticEnabled())
 
   useEffect(() => {
     getSettings()
@@ -100,29 +103,40 @@ export default function ElderlyInterface() {
   }
 
   const handleCheckin = async () => {
+    triggerHapticFeedback(PATTERNS.tap)
     triggerRipple('okay')
     const ok = await send(postCheckin)
     if (ok) {
+      triggerHapticFeedback(PATTERNS.confirm)
       setLastCheckin(new Date())
       setScreen(SCREENS.OKAY_CONFIRM)
     }
   }
 
   const handleSuspicious = () => {
+    triggerHapticFeedback(PATTERNS.tap)
     triggerRipple('suspicious')
     setError('')
     setTimeout(() => setScreen(SCREENS.SUSPICIOUS_CHOICE), 200)
   }
 
   const handleSuspiciousReport = async (senderType) => {
+    triggerHapticFeedback(PATTERNS.tap)
     const ok = await send(() => postSuspicious(senderType))
-    if (ok) setScreen(SCREENS.SUSPICIOUS_CONFIRM)
+    if (ok) {
+      triggerHapticFeedback(PATTERNS.confirm)
+      setScreen(SCREENS.SUSPICIOUS_CONFIRM)
+    }
   }
 
   const handleHelp = async () => {
+    triggerHapticFeedback(PATTERNS.tap)
     triggerRipple('help')
     const ok = await send(postHelp)
-    if (ok) setTimeout(() => setScreen(SCREENS.HELP), 200)
+    if (ok) {
+      triggerHapticFeedback(PATTERNS.urgent)
+      setTimeout(() => setScreen(SCREENS.HELP), 200)
+    }
   }
 
   const goHome = () => {
@@ -209,6 +223,20 @@ export default function ElderlyInterface() {
             <span className="elderly-checkin-time">
               🕐 {formatTime(lastCheckin)}
             </span>
+            <button
+              id="btn-vibration-toggle"
+              className="elderly-vibration-toggle"
+              role="switch"
+              aria-checked={vibration}
+              onClick={() => {
+                const next = !vibration
+                setVibration(next)
+                setHapticEnabled(next)
+                if (next) triggerHapticFeedback(PATTERNS.tap)
+              }}
+            >
+              📳 Vibration: {vibration ? 'On' : 'Off'}
+            </button>
           </div>
         </div>
       )}
