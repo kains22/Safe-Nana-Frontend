@@ -8,17 +8,23 @@ A prototype check-in and safety coordination tool for older adults and their fam
 
 ## 📱 What It Does Today
 
-**Older adult screen** (three buttons)
-- I'm Okay Today: records a daily check-in
-- I Got a Suspicious Message: records who the message came from
-- I Need Help: records a help request and shows a tap-to-call family contact
+**Older adult screen** (three large buttons, in traffic-light order: red, amber, green)
+- 🔴 I Need Help: records a help request, then shows a one-tap call to the family contact and a one-tap call to the local emergency number (chosen from the phone's region, default 112)
+- 🟠 I Got a Suspicious Message: asks who sent it (unknown number, message from WhatsApp, someone I know, or I'm not sure) and records the report
+- 🟢 I'm Okay Today: records a daily check-in
+
+**Accessibility features**
+- Large, high-contrast buttons (text contrast of about 7:1 or better, to be verified with a contrast checker)
+- Plain, literal wording: "Back to choices", plus an "All done, press your phone's Home button" note and a Close button
+- Optional vibration feedback, with an on/off switch
+- Layout tested to fit a 375x667 phone screen without scrolling on the "Who sent it?" screen
+- Honest failure messages: if a request does not reach the server, the app says "Not sent"
 
 **Family dashboard**
 - Today's check-in status and a 7-day summary
 - Activity feed (refreshes every 10 seconds)
 - Suspicious message reports
 - Settings for the person's name and a family contact
-- Honest failure messages: if a request does not reach the server, the app says "Not sent"
 
 ---
 
@@ -30,6 +36,13 @@ A prototype check-in and safety coordination tool for older adults and their fam
 - Multiple residents and caregivers
 - Automatic missed check-in alerts
 - PDF/CSV reports
+
+## ⚠️ Known Limits
+
+- **Vibration** works on most Android browsers with touch vibration turned on in the phone settings. iPhone browsers do not support it, so iPhone users get visual confirmation only.
+- **Language:** the app is in English only. Browser auto-translate can change wording and gender forms, so official translations (with native-speaker review) will be added on request.
+- **Emergency number** is guessed from the phone's region. A per-person setting is planned.
+- **No smartwatch version** yet.
 
 ---
 
