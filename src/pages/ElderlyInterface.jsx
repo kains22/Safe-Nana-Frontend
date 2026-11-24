@@ -182,17 +182,19 @@ export default function ElderlyInterface() {
           </div>
 
           <div className="elderly-buttons">
+            {/* RED: help (top) */}
             <button
-              id="btn-okay"
-              className={`elderly-btn elderly-btn--green ${ripple === 'okay' ? 'ripple' : ''}`}
-              onClick={handleCheckin}
+              id="btn-help"
+              className={`elderly-btn elderly-btn--red ${ripple === 'help' ? 'ripple' : ''}`}
+              onClick={handleHelp}
               disabled={loading}
-              aria-label="I am okay today"
+              aria-label="I need help"
             >
-              <span className="elderly-btn-icon">✅</span>
-              <span className="elderly-btn-text">I'm Okay Today</span>
+              <span className="elderly-btn-icon">📞</span>
+              <span className="elderly-btn-text">I Need Help</span>
             </button>
 
+            {/* AMBER: suspicious message (middle) */}
             <button
               id="btn-suspicious"
               className={`elderly-btn elderly-btn--amber ${ripple === 'suspicious' ? 'ripple' : ''}`}
@@ -204,15 +206,16 @@ export default function ElderlyInterface() {
               <span className="elderly-btn-text">I Got a Suspicious Message</span>
             </button>
 
+            {/* GREEN: okay (bottom) */}
             <button
-              id="btn-help"
-              className={`elderly-btn elderly-btn--red ${ripple === 'help' ? 'ripple' : ''}`}
-              onClick={handleHelp}
+              id="btn-okay"
+              className={`elderly-btn elderly-btn--green ${ripple === 'okay' ? 'ripple' : ''}`}
+              onClick={handleCheckin}
               disabled={loading}
-              aria-label="I need help"
+              aria-label="I am okay today"
             >
-              <span className="elderly-btn-icon">📞</span>
-              <span className="elderly-btn-text">I Need Help</span>
+              <span className="elderly-btn-icon">✅</span>
+              <span className="elderly-btn-text">I'm Okay Today</span>
             </button>
           </div>
 
