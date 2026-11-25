@@ -473,3 +473,9 @@
   min-height: 48px;
   cursor: pointer;
 }
+
+
+/* Make the phone emoji white on the red Help button */
+.elderly-btn--red .elderly-btn-icon {
+  filter: brightness(0) invert(1);
+}
